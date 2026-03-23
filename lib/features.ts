@@ -1,4 +1,4 @@
-export type FeatureIcon = "phone" | "brain" | "zap";
+export type FeatureIcon = "phone" | "sparkles" | "zap";
 
 export interface Feature {
   id: string;
@@ -30,7 +30,7 @@ export const features: Feature[] = [
     description:
       "Contextual intelligence that surfaces the right information at the right moment, helping field teams make smarter decisions on every job.",
     status: "coming-soon",
-    icon: "brain",
+    icon: "sparkles",
     embedType: "figma",
     figmaEmbedUrl: "https://early-glass-81375391.figma.site/",
   },
