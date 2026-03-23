@@ -33,7 +33,7 @@ export default function ParticleField() {
         vy: (Math.random() - 0.5) * SPEED_RANGE * 2,
         radius: Math.random() * 1.4 + 0.6,
         opacity: Math.random() * 0.25 + 0.12,
-        hue: 265 + Math.random() * 30,
+        hue: 40 + Math.random() * 25,
       });
     }
     return particles;
@@ -120,7 +120,7 @@ export default function ParticleField() {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `oklch(0.55 0.12 ${(p.hue + p2.hue) / 2} / ${alpha})`;
+            ctx.strokeStyle = `oklch(0.55 0.10 ${(p.hue + p2.hue) / 2} / ${alpha})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -129,7 +129,7 @@ export default function ParticleField() {
         // Draw particle
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `oklch(0.65 0.14 ${p.hue} / ${p.opacity})`;
+        ctx.fillStyle = `oklch(0.65 0.12 ${p.hue} / ${p.opacity})`;
         ctx.fill();
       }
 

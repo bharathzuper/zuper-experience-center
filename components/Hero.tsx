@@ -1,18 +1,29 @@
 "use client";
 
 import { motion } from "framer-motion";
-import ParticleField from "./ParticleField";
+import DotGrid from "./DotGrid";
 
 export default function Hero() {
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
+    <section className="hero-noise relative flex min-h-screen items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
         <div className="gradient-blob gradient-blob-1" />
         <div className="gradient-blob gradient-blob-2" />
         <div className="gradient-blob gradient-blob-3" />
       </div>
 
-      <ParticleField />
+      <DotGrid
+        dotSize={5}
+        gap={20}
+        baseColor="#2a1525"
+        activeColor="#c44a90"
+        proximity={120}
+        shockRadius={250}
+        shockStrength={5}
+        returnDuration={1.5}
+        className="!absolute inset-0"
+        style={{ zIndex: 1, pointerEvents: "auto" }}
+      />
 
       <div className="relative z-10 px-6 text-center">
         <motion.p

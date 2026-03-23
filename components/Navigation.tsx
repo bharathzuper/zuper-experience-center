@@ -23,7 +23,7 @@ export default function Navigation() {
         className="transition-all duration-500"
         style={{
           background: scrolled
-            ? "oklch(0.12 0.01 265 / 0.88)"
+            ? "oklch(0.09 0.012 340 / 0.88)"
             : "transparent",
           backdropFilter: scrolled ? "blur(16px) saturate(1.4)" : "none",
           WebkitBackdropFilter: scrolled
@@ -49,7 +49,7 @@ export default function Navigation() {
           </a>
 
           <a
-            href="#features"
+            href="/#features"
             className="nav-link text-sm font-medium transition-colors duration-200"
             style={{ fontFamily: "var(--font-display)" }}
           >
