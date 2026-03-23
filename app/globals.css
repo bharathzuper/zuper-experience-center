@@ -1,26 +1,758 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-bg-deep: oklch(0.12 0.01 265);
+  --color-bg-surface: oklch(0.16 0.01 265);
+  --color-bg-elevated: oklch(0.20 0.012 265);
+
+  --color-text-primary: oklch(0.92 0.01 85);
+  --color-text-secondary: oklch(0.56 0.01 265);
+  --color-text-muted: oklch(0.38 0.01 265);
+
+  --color-accent: oklch(0.68 0.19 275);
+  --color-accent-subtle: oklch(0.35 0.12 275);
+
+  --color-border: oklch(0.22 0.01 265);
+  --color-border-subtle: oklch(0.18 0.01 265);
+
+  --color-status-live: oklch(0.70 0.17 155);
+  --color-status-soon: oklch(0.72 0.14 75);
+
+  --space-xs: clamp(0.25rem, 0.5vw, 0.5rem);
+  --space-sm: clamp(0.5rem, 1vw, 0.75rem);
+  --space-md: clamp(1rem, 2vw, 1.5rem);
+  --space-lg: clamp(1.5rem, 3vw, 2.5rem);
+  --space-xl: clamp(2rem, 5vw, 4rem);
+  --space-2xl: clamp(3rem, 8vw, 6rem);
+  --space-3xl: clamp(4rem, 10vw, 8rem);
+
+  --text-display: clamp(3rem, 6vw, 5.5rem);
+  --text-h1: clamp(2rem, 4vw, 3.5rem);
+  --text-h2: clamp(1.5rem, 2.5vw, 2rem);
+  --text-body: clamp(1rem, 1.1vw, 1.125rem);
+  --text-small: clamp(0.8125rem, 1vw, 0.9375rem);
+  --text-caption: clamp(0.6875rem, 0.8vw, 0.8125rem);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--color-bg-deep);
+  --color-foreground: var(--color-text-primary);
+  --font-display: var(--font-space-grotesk);
+  --font-body: var(--font-dm-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg-deep);
+  color: var(--color-text-primary);
+  font-family: var(--font-body), system-ui, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Gradient blobs (hero background) ── */
+
+.gradient-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(130px);
+  opacity: 0.35;
+  will-change: transform;
+}
+
+.gradient-blob-1 {
+  width: min(600px, 70vw);
+  height: min(600px, 70vw);
+  background: oklch(0.40 0.16 275);
+  top: -15%;
+  left: -10%;
+  animation: blobDrift1 22s ease-in-out infinite;
+}
+
+.gradient-blob-2 {
+  width: min(500px, 60vw);
+  height: min(500px, 60vw);
+  background: oklch(0.30 0.14 310);
+  bottom: -10%;
+  right: -8%;
+  animation: blobDrift2 26s ease-in-out infinite;
+}
+
+.gradient-blob-3 {
+  width: min(400px, 50vw);
+  height: min(400px, 50vw);
+  background: oklch(0.25 0.10 220);
+  top: 35%;
+  left: 45%;
+  animation: blobDrift3 20s ease-in-out infinite;
+}
+
+@keyframes blobDrift1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, -60px) scale(1.08); }
+  66% { transform: translate(-30px, 40px) scale(0.94); }
+}
+
+@keyframes blobDrift2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-50px, 30px) scale(1.1); }
+  66% { transform: translate(30px, -40px) scale(0.92); }
+}
+
+@keyframes blobDrift3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(60px, 20px) scale(1.06); }
+  66% { transform: translate(-40px, -50px) scale(0.96); }
+}
+
+/* ── Laptop device frame ── */
+
+.laptop-wrapper {
+  position: relative;
+  margin: 0 auto;
+  filter: drop-shadow(0 8px 40px oklch(0 0 0 / 0.35))
+    drop-shadow(0 0 60px oklch(0.30 0.10 275 / 0.12));
+}
+
+/* ── Hide scrollbar utility ── */
+
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.laptop-lid {
+  background: linear-gradient(
+    180deg,
+    oklch(0.27 0.006 265),
+    oklch(0.21 0.006 265)
+  );
+  border-radius: 14px 14px 0 0;
+  padding: 14px 14px 10px;
+  box-shadow: 0 -1px 0 oklch(0.32 0.006 265);
+}
+
+.laptop-camera {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: oklch(0.18 0.006 265);
+  margin: 0 auto 8px;
+  box-shadow: inset 0 0 2px oklch(0.10 0 0), 0 0 1px oklch(0.32 0.006 265);
+}
+
+.laptop-screen {
+  aspect-ratio: 16 / 10;
+  border-radius: 3px;
+  overflow: hidden;
+  background: oklch(0.06 0.005 265);
+  position: relative;
+}
+
+.laptop-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 30px oklch(0 0 0 / 0.35);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.laptop-base-strip {
+  height: 10px;
+  background: linear-gradient(
+    180deg,
+    oklch(0.23 0.006 265),
+    oklch(0.26 0.006 265)
+  );
+  border-radius: 0 0 2px 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.laptop-indent {
+  width: 16%;
+  height: 4px;
+  background: oklch(0.19 0.006 265);
+  border-radius: 0 0 4px 4px;
+}
+
+.laptop-front-edge {
+  width: 104%;
+  margin-left: -2%;
+  height: 3px;
+  background: linear-gradient(
+    180deg,
+    oklch(0.28 0.006 265),
+    oklch(0.23 0.006 265)
+  );
+  border-radius: 0 0 6px 6px;
+}
+
+/* ── Screen shimmer (iframe loading) ── */
+
+.screen-shimmer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    110deg,
+    oklch(0.08 0.005 265) 0%,
+    oklch(0.08 0.005 265) 35%,
+    oklch(0.14 0.008 275) 50%,
+    oklch(0.08 0.005 265) 65%,
+    oklch(0.08 0.005 265) 100%
+  );
+  background-size: 250% 100%;
+  animation: shimmer 2.4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 250% 0; }
+  100% { background-position: -250% 0; }
+}
+
+/* ── Screen placeholder ── */
+
+.screen-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  z-index: 1;
+  background: linear-gradient(
+    145deg,
+    oklch(0.10 0.008 275),
+    oklch(0.06 0.005 265)
+  );
+}
+
+/* ── Phone device frame ── */
+
+.phone-frame-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(1rem, 3vw, 3rem) 0;
+}
+
+.phone-frame {
+  position: relative;
+  width: clamp(280px, 40vw, 360px);
+  background: linear-gradient(
+    170deg,
+    oklch(0.28 0.006 265),
+    oklch(0.20 0.006 265) 50%,
+    oklch(0.24 0.006 265)
+  );
+  border-radius: 48px;
+  padding: 10px;
+  box-shadow:
+    0 0 0 1px oklch(0.32 0.006 265),
+    0 20px 60px oklch(0 0 0 / 0.4),
+    0 0 80px oklch(0.30 0.10 275 / 0.08),
+    inset 0 1px 0 oklch(0.36 0.006 265 / 0.5);
+}
+
+/* Side buttons */
+.phone-side-btn {
+  position: absolute;
+  background: oklch(0.25 0.006 265);
+  border-radius: 2px;
+}
+
+.phone-side-btn--silent {
+  left: -3px;
+  top: 100px;
+  width: 3px;
+  height: 28px;
+}
+
+.phone-side-btn--vol-up {
+  left: -3px;
+  top: 150px;
+  width: 3px;
+  height: 48px;
+}
+
+.phone-side-btn--vol-down {
+  left: -3px;
+  top: 210px;
+  width: 3px;
+  height: 48px;
+}
+
+.phone-side-btn--power {
+  right: -3px;
+  top: 170px;
+  width: 3px;
+  height: 56px;
+}
+
+.phone-screen {
+  border-radius: 40px;
+  overflow: hidden;
+  background: oklch(0.06 0.01 265);
+  position: relative;
+}
+
+/* Dynamic Island */
+.phone-dynamic-island {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 28px;
+  background: oklch(0.04 0 0);
+  border-radius: 20px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+}
+
+.phone-island-camera {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: oklch(0.10 0.02 275);
+  box-shadow: inset 0 0 3px oklch(0.04 0 0), 0 0 2px oklch(0.20 0.06 275 / 0.5);
+}
+
+/* Call UI */
+.phone-call-ui {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 580px;
+  padding: 56px 20px 16px;
+  background: linear-gradient(
+    180deg,
+    oklch(0.08 0.015 275) 0%,
+    oklch(0.06 0.01 265) 40%,
+    oklch(0.05 0.008 265) 100%
+  );
+}
+
+/* Status bar */
+.phone-status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: clamp(24px, 5vw, 40px);
+  color: oklch(0.70 0.01 265);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-display), system-ui, sans-serif;
+}
+
+.phone-status-icons {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: oklch(0.70 0.01 265);
+}
+
+/* Contact */
+.phone-contact {
+  text-align: center;
+  margin-bottom: clamp(20px, 4vw, 36px);
+}
+
+.phone-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, oklch(0.30 0.12 275), oklch(0.22 0.08 275));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+  color: oklch(0.75 0.10 275);
+  box-shadow: 0 0 24px oklch(0.35 0.14 275 / 0.25);
+}
+
+.phone-caller-name {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: clamp(22px, 3vw, 28px);
+  font-weight: 700;
+  color: oklch(0.92 0.01 85);
+  letter-spacing: -0.02em;
+  margin: 0 0 4px;
+}
+
+.phone-call-status {
+  font-size: 14px;
+  color: oklch(0.52 0.01 265);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+/* Waveform */
+.phone-waveform-section {
+  width: 100%;
+  margin-bottom: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.phone-play-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: oklch(0.68 0.19 275);
+  color: oklch(0.98 0 0);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease-out;
+  box-shadow: 0 0 20px oklch(0.68 0.19 275 / 0.3);
+  margin-bottom: 4px;
+}
+
+.phone-play-btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 28px oklch(0.68 0.19 275 / 0.45);
+}
+
+.phone-play-btn:active {
+  transform: scale(0.96);
+}
+
+.phone-waveform {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5px;
+  height: 36px;
+  width: 100%;
+}
+
+.phone-waveform-bar {
+  width: 3px;
+  min-height: 3px;
+  height: 3px;
+  border-radius: 2px;
+  background: oklch(0.68 0.19 275 / 0.6);
+  transition: height 0.15s ease-out;
+}
+
+.phone-waveform-bar--active {
+  animation: waveformPulse 1.2s ease-in-out infinite alternate;
+  background: oklch(0.68 0.19 275);
+}
+
+@keyframes waveformPulse {
+  0% { height: 3px; }
+  50% { height: var(--wave-h, 18px); }
+  100% { height: 5px; }
+}
+
+.phone-waveform-bar--active:nth-child(odd) { --wave-h: 24px; }
+.phone-waveform-bar--active:nth-child(3n) { --wave-h: 32px; }
+.phone-waveform-bar--active:nth-child(5n) { --wave-h: 14px; }
+.phone-waveform-bar--active:nth-child(7n) { --wave-h: 28px; }
+.phone-waveform-bar--active:nth-child(4n+1) { --wave-h: 20px; }
+
+/* Progress */
+.phone-progress-track {
+  width: 100%;
+  height: 3px;
+  background: oklch(0.18 0.01 265);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.phone-progress-fill {
+  height: 100%;
+  background: oklch(0.68 0.19 275);
+  border-radius: 2px;
+  transition: width 0.3s linear;
+}
+
+.phone-time-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 11px;
+  color: oklch(0.42 0.01 265);
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-display), system-ui, sans-serif;
+}
+
+/* Controls */
+.phone-controls {
+  display: flex;
+  gap: clamp(16px, 4vw, 28px);
+  margin-top: clamp(24px, 4vw, 36px);
+  margin-bottom: 16px;
+}
+
+.phone-control-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: oklch(0.16 0.01 265);
+  border: none;
+  border-radius: 16px;
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  cursor: pointer;
+  color: oklch(0.72 0.01 265);
+  justify-content: center;
+  transition: background 0.2s ease-out, color 0.2s ease-out;
+}
+
+.phone-control-btn:hover {
+  background: oklch(0.20 0.01 265);
+}
+
+.phone-control-btn--active {
+  background: oklch(0.88 0.01 265);
+  color: oklch(0.12 0.01 265);
+}
+
+.phone-control-btn--active:hover {
+  background: oklch(0.82 0.01 265);
+}
+
+.phone-control-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-family: var(--font-display), system-ui, sans-serif;
+}
+
+/* End call */
+.phone-end-call-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.phone-end-call-btn {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: none;
+  background: oklch(0.55 0.22 25);
+  color: oklch(0.98 0 0);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease-out, box-shadow 0.2s ease-out;
+  box-shadow: 0 0 20px oklch(0.55 0.22 25 / 0.3);
+}
+
+.phone-end-call-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 28px oklch(0.55 0.22 25 / 0.4);
+}
+
+.phone-end-call-btn:active {
+  transform: scale(0.94);
+}
+
+/* Home indicator */
+.phone-home-indicator {
+  width: 36%;
+  height: 4px;
+  border-radius: 2px;
+  background: oklch(0.30 0.006 265);
+  margin-top: auto;
+  margin-bottom: 0;
+}
+
+/* ── Fullscreen experience ── */
+
+.fullscreen-trigger {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 18px;
+  border: 1px solid oklch(0.68 0.19 275 / 0.35);
+  border-radius: 10px;
+  background: oklch(0.14 0.02 275 / 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: oklch(0.88 0.06 275);
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  box-shadow:
+    0 2px 12px oklch(0 0 0 / 0.4),
+    0 0 20px oklch(0.68 0.19 275 / 0.1);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.2s ease-out,
+    background 0.2s ease-out,
+    box-shadow 0.2s ease-out;
+}
+
+.fullscreen-trigger:hover {
+  border-color: oklch(0.68 0.19 275 / 0.6);
+  background: oklch(0.18 0.04 275 / 0.9);
+  color: oklch(0.95 0.03 275);
+  box-shadow:
+    0 4px 20px oklch(0 0 0 / 0.5),
+    0 0 30px oklch(0.68 0.19 275 / 0.18);
+  transform: translateY(-1px);
+}
+
+.fullscreen-trigger:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.fullscreen-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-deep);
+  animation: fullscreenIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fullscreenIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fullscreen-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg-surface);
+  flex-shrink: 0;
+}
+
+.fullscreen-title {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.fullscreen-close {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s ease-out, color 0.15s ease-out,
+    background 0.15s ease-out;
+}
+
+.fullscreen-close:hover {
+  border-color: oklch(0.55 0.22 25 / 0.5);
+  color: oklch(0.70 0.18 25);
+  background: oklch(0.55 0.22 25 / 0.06);
+}
+
+.fullscreen-close:active {
+  transform: scale(0.96);
+}
+
+.fullscreen-iframe {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* ── Feature section divider ── */
+
+.section-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-border) 20%,
+    var(--color-border) 80%,
+    transparent
+  );
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+/* ── Navigation link states ── */
+
+.nav-link {
+  color: var(--color-text-secondary);
+  transition: color 0.2s ease-out;
+}
+
+.nav-link:hover {
+  color: var(--color-text-primary);
+}
+
+/* ── Selection color ── */
+
+::selection {
+  background: oklch(0.45 0.14 275 / 0.4);
+  color: var(--color-text-primary);
+}
+
+/* ── Scrollbar ── */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.30 0.01 265);
 }
