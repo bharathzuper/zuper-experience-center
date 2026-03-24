@@ -1,8 +1,10 @@
 "use client";
 
+import { useRef, useCallback } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Phone, Sparkles, Zap, ArrowRight } from "lucide-react";
+import { useTheme } from "next-themes";
 import type { Feature, FeatureIcon } from "@/lib/features";
 
 const iconMap: Record<FeatureIcon, React.ComponentType<{ size?: number; strokeWidth?: number }>> = {
@@ -20,6 +22,23 @@ export default function FeatureCard({
 }) {
   const isLive = feature.status === "available";
   const Icon = iconMap[feature.icon];
+  const cardRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
+  const { resolvedTheme } = useTheme();
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!cardRef.current || !glowRef.current || resolvedTheme === "light") return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    glowRef.current.style.setProperty("--glow-x", `${x}px`);
+    glowRef.current.style.setProperty("--glow-y", `${y}px`);
+    glowRef.current.style.opacity = "1";
+  }, [resolvedTheme]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (glowRef.current) glowRef.current.style.opacity = "0";
+  }, []);
 
   return (
     <motion.div
@@ -36,7 +55,17 @@ export default function FeatureCard({
         href={`/features/${feature.id}`}
         className="feature-card group block"
       >
-        <div className="feature-card__inner">
+        <div
+          ref={cardRef}
+          className="feature-card__inner"
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+        >
+          <div
+            ref={glowRef}
+            className="feature-card__glow"
+            aria-hidden="true"
+          />
           <div className="feature-card__header">
             <div className="feature-card__icon">
               <Icon size={22} strokeWidth={1.6} />

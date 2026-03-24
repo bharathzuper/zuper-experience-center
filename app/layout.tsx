@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, DM_Sans } from "next/font/google";
+import { ThemeProvider } from "next-themes";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -37,8 +38,13 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${spaceGrotesk.variable} ${dmSans.variable} antialiased`}
+      suppressHydrationWarning
     >
-      <body>{children}</body>
+      <body>
+        <ThemeProvider attribute="data-theme" defaultTheme="dark" enableSystem={false}>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

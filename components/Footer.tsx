@@ -1,4 +1,15 @@
+"use client";
+
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+
 export default function Footer() {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  const isLight = mounted && resolvedTheme === "light";
+
   return (
     <footer
       className="relative"
@@ -16,7 +27,7 @@ export default function Footer() {
       >
         <div className="flex items-center gap-3">
           <img
-            src="/zuper-logo.png"
+            src={isLight ? "/zuper-logo-dark.png" : "/zuper-logo.png"}
             alt="Zuper"
             className="h-5 w-auto"
           />
