@@ -24,20 +24,30 @@ export default function FeatureCard({
   const Icon = iconMap[feature.icon];
   const cardRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
+  const shineRef = useRef<HTMLDivElement>(null);
   const { resolvedTheme } = useTheme();
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!cardRef.current || !glowRef.current || resolvedTheme === "light") return;
+    if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    glowRef.current.style.setProperty("--glow-x", `${x}px`);
-    glowRef.current.style.setProperty("--glow-y", `${y}px`);
-    glowRef.current.style.opacity = "1";
+
+    if (resolvedTheme !== "light" && glowRef.current) {
+      glowRef.current.style.setProperty("--glow-x", `${x}px`);
+      glowRef.current.style.setProperty("--glow-y", `${y}px`);
+      glowRef.current.style.opacity = "1";
+    }
+    if (resolvedTheme === "light" && shineRef.current) {
+      shineRef.current.style.setProperty("--shine-x", `${x}px`);
+      shineRef.current.style.setProperty("--shine-y", `${y}px`);
+      shineRef.current.style.opacity = "1";
+    }
   }, [resolvedTheme]);
 
   const handleMouseLeave = useCallback(() => {
     if (glowRef.current) glowRef.current.style.opacity = "0";
+    if (shineRef.current) shineRef.current.style.opacity = "0";
   }, []);
 
   return (
@@ -64,6 +74,11 @@ export default function FeatureCard({
           <div
             ref={glowRef}
             className="feature-card__glow"
+            aria-hidden="true"
+          />
+          <div
+            ref={shineRef}
+            className="feature-card__shine"
             aria-hidden="true"
           />
           <div className="feature-card__header">

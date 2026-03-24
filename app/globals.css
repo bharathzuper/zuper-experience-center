@@ -403,6 +403,30 @@ body {
   display: none;
 }
 
+/* Spotlight shine — light mode only, tracks mouse */
+.feature-card__shine {
+  --shine-x: 50%;
+  --shine-y: 50%;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.35s ease-out;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    350px circle at var(--shine-x) var(--shine-y),
+    rgba(247, 91, 49, 0.12) 0%,
+    rgba(247, 91, 49, 0.04) 40%,
+    transparent 70%
+  );
+  display: none;
+}
+
+[data-theme="light"] .feature-card__shine {
+  display: block;
+}
+
 .feature-card__header {
   display: flex;
   align-items: center;
