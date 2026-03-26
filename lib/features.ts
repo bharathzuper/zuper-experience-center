@@ -42,7 +42,7 @@ export const features: Feature[] = [
     status: "coming-soon",
     icon: "sparkles",
     embedType: "figma",
-    figmaEmbedUrl: "https://early-glass-81375391.figma.site/",
+    figmaEmbedUrl: "https://astonishing-cocada-542e19.netlify.app",
   },
   {
     id: "zuper-power-dialer",
