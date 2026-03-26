@@ -1,5 +1,12 @@
 export type FeatureIcon = "phone" | "sparkles" | "zap";
 
+export interface AudioCall {
+  label: string;
+  caller: string;
+  time: string;
+  url: string;
+}
+
 export interface Feature {
   id: string;
   title: string;
@@ -8,21 +15,24 @@ export interface Feature {
   icon: FeatureIcon;
   embedType: "figma" | "audio";
   figmaEmbedUrl: string;
-  audioUrl?: string;
+  audioCalls?: AudioCall[];
 }
 
 export const features: Feature[] = [
   {
     id: "ai-call-responder",
-    title: "AI Call Responder",
+    title: "CSR Agent",
     description:
       "Intelligent AI-powered call handling that answers, routes, and resolves customer inquiries in real time — so your team never misses a beat.",
     status: "available",
     icon: "phone",
     embedType: "audio",
     figmaEmbedUrl: "",
-    audioUrl:
-      "https://s3.ap-south-1.amazonaws.com/staging.in.pro.zuper/attachments/d72d9c81-ce36-4c62-8242-e5a67cfef34f/120e2274-d56d-405c-8132-bafeecfc5049.mp3",
+    audioCalls: [
+      { label: "Service Inquiry", caller: "Sarah Mitchell", time: "Today, 2:14 PM", url: "/audio/call-1.mp3" },
+      { label: "Appointment Booking", caller: "James Rivera", time: "Today, 11:30 AM", url: "/audio/call-2.mp3" },
+      { label: "Follow-up Call", caller: "Emily Carter", time: "Yesterday, 4:45 PM", url: "/audio/call-3.mp3" },
+    ],
   },
   {
     id: "zuper-sense",

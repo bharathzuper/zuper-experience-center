@@ -97,7 +97,7 @@ export default function Hero() {
     : ["#c44a90", "#a855f7", "#ff6b9d", "#c44a90"];
 
   return (
-    <section className="hero-noise relative flex min-h-screen items-center justify-center overflow-hidden">
+    <section className="hero-noise relative flex items-center justify-center overflow-hidden" style={{ minHeight: "85vh" }}>
       <div className="absolute inset-0">
         <div className="gradient-blob gradient-blob-1" />
         <div className="gradient-blob gradient-blob-2" />
